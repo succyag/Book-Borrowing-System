@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yx.dao.TypeInfoMapper" >
+  <!--查询全部类型信息-->
+  <select id="queryTypeInfoAll" resultType="com.yx.po.TypeInfo">
+    select * from type_info
+    <where>
+      <if test="name!=null">
+        and name like '%${name}%'
+      </if>
+    </where>
+  </select>
+
+  <!--类型的添加-->
+  <insert id="addTypeSubmit">
+        insert into type_info (name,remarks)values(#{name},#{remarks})
+    </insert>
+
+  <!--根据id查询类型信息-->
+  <select id="queryTypeInfoById" resultType="com.yx.po.TypeInfo">
+        select * from type_info where id=#{id}
+    </select>
+
+  <!--修改图书类型-->
+  <update id="updateTypeSubmit">
+         update type_info set name=#{name},remarks=#{remarks} where id=#{id}
+    </update>
+
+  <!--删除类型-->
+  <delete id="deleteTypeByIds" parameterType="List">
+    delete from type_info where id in
+    <foreach collection="list" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+  <select id="queryTypeName" resultType="com.yx.po.TypeInfo">
+    select type.name
+    from type_info type
+  </select>
+</mapper>
